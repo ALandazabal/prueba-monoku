@@ -6,7 +6,7 @@ import psycopg2
 import config as conf
 
 def readData(conn):
-    with open('datos.csv', mode='r', encoding="utf8") as csv_file:
+    with open('prueba_back_monoku_2021_datos.csv', mode='r', encoding="utf8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
 
