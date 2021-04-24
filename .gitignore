@@ -3,3 +3,6 @@
 
 #CACHE
 *__pycache__/
+
+#Files
+datos.csv
