@@ -14,8 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from myapi import views as myapi_views
+
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('myapi.urls')),
+
+    url(r'^api/songs/(?P<title>[A-Za-z]+)/$', myapi_views.song_list),
 ]
