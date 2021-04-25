@@ -1,5 +1,0 @@
-host="127.0.0.1"
-database="prueba_monoku"
-user="postgres"
-password="postgres"
-port="5433"
