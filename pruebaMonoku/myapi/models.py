@@ -34,7 +34,10 @@ class Instrument(models.Model):
 
 class Song(models.Model):
 
-    date = models.DateTimeField(null=False)
+    date = models.CharField(
+        max_length=50,
+        null=False
+    )
 
     external_id = models.IntegerField(null=True)
 
