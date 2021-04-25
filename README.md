@@ -1,38 +1,64 @@
 # Prueba Monoku
+En las siguientes secciones se detalla los diferentes aspectos a seguir para la ejecución de la aplicación.  Se informa que el siguiente proyecto está realizado sobre el sistema operativo(SO) **Windows 10**.
 
-En las siguientes secciones se detalla los diferentes aspectos a seguir para la ejecución de la aplicación
+## Requerimientos
+* Python 3.7
+* PIP -> Para instalarlo puede seguir las instrucciones del siguiente link <https://pip.pypa.io/en/stable/installing/>
+* PostgreSQL -> Puede seguir los pasos de instalación en el siguiente blog <https://paggyru.medium.com/install-postgresql-12-on-windows-10-for-beginners-5e8fce387dc7>
+* virtualenv -> Luego de tener **pip** en su máquina, puede usar el siguiente comando para instalarlo:
+```bash
+pip install virtualenv
+```
+
 
 ## Instalación
-Luego de descargar el repositorio, se debe de crear un entorno virtual con la siguiente instrucción usando virtualenv:
+Luego de descargar el repositorio, se debe de crear un entorno virtual y la base de datos en la que correra el proyecto:
+
+### Entorno virtual
+Para crear el entorno virtual, se procede con el siguiente comando:
 
 ```bash
 virtualenv env
 ```
 
-En caso de que use Windows como SO, activar el ambiente con el siguiente comando:
+Con el SO Windows, se activa el ambiente con el comando:
 
 ```bash
 \env\Scripts\activate
 ```
 
-Luego de activado el ambiente, se procede a instalar las dependencias con el comando:
+Luego de activado el ambiente, se procede a instalar las dependencias:
 
 ```bash
 pip install -r requirements.txt
 ```
 
+### Base de datos (DB)
+Luego de tener Postgres en su máquina siga los siguientes pasos:
+* Cree una nueva DB.
+* Obtenga los datos de conexión como el host, puerto, nombre de la DB, usuario y contraseña.
+* En la carpeta raíz del proyecto, modifique el nombre del archivo **configExample.py** a **config.py**.
+* Dentro del archivo **config.py**, coloque los datos de conexión correspondientes que allí se le solicitan.
+* Guarde los cambios.
+
 # Ejecución
+Para ejecutar django, ubiquese dentro de la carpeta llamada **pruebaMonoku** y luego debe de ejecutar los comandos de los siguientes pasos:
 
-Para ejecutar django, ubiquese dentro de la carpeta llamada **pruebaMonoku** y luego debe de utilizar el siguiente comando:
-
+* Verifique que todas las migraciones estén creadas en el proyecto:
+```bash
+python manage.py makemigrations
+```
+* Aplique las migraciones relacionadas al proyecto
+```bash
+python manage.py migrate
+```
+* Sí los pasos anteriores fueron ejecutados con éxito, corra la aplicación con:
 ```bash
 python manage.py runserver
 ```
 
 # Cargar Datos
-
 Ubíquese en la carpeta raíz del repositorio y ejecute el siguiente comando :
-
 ```bash
 loadData.py
 ```
