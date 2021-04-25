@@ -34,6 +34,10 @@ class Instrument(models.Model):
 
 class Song(models.Model):
 
+    date = models.DateTimeField(null=False)
+
+    external_id = models.IntegerField(null=True)
+
     title = models.CharField(
         max_length=256,
         null=False
@@ -44,8 +48,6 @@ class Song(models.Model):
         null=False
     )
 
-    date = models.DateTimeField(null=False)
-
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
 
     subgenres = models.ManyToManyField(Subgenre)
@@ -53,6 +55,8 @@ class Song(models.Model):
     tags = models.ManyToManyField(Tag)
 
     instruments = models.ManyToManyField(Instrument)
+
+    bands = models.ManyToManyField(Band)
 
     def __str__(self):
         return '{} album {} date {}'.format(self.title, self.album, self.date)
