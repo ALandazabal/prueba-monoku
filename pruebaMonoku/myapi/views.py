@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.http import JsonResponse
 
-import django_filters.rest_framework
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, status, viewsets, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -13,17 +13,17 @@ from .models import Song, Band
 
 
 class SongViewSet(viewsets.ModelViewSet):
-#class SongViewSet(generics.ListAPIView):
     queryset = Song.objects.all().order_by('title')
     serializer_class = SongSerializer
 
     lookup_field = 'id'
 
     # Showing a input text to search for a match
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title']
+    #filter_backends = [filters.SearchFilter]
+    #search_fields = ['title']
 
-    #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['title', 'date']
 
 
 @api_view(['GET'])
