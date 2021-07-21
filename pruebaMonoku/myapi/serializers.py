@@ -3,19 +3,6 @@ from rest_framework import serializers
 from .models import Song, Album, Band
 
 
-class SongSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Song
-        fields = (
-            'id',
-            'title',
-            'duration',
-            'date',
-            'external_id',
-            'album_id'
-        )
-
-
 class AlbumSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Album
@@ -25,9 +12,30 @@ class AlbumSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class BandSerializer(serializers.HyperlinkedModelSerializer):
+class BandSerializer(serializers.RelatedField):
+    
+    def to_representation(self, value):
+        return value.name
+    
     class Meta:
         model = Band
         fields = (
             'name'
+        )
+
+
+class SongSerializer(serializers.HyperlinkedModelSerializer):
+    #bands = serializers.PrimaryKeyRelatedField(queryset=Band.objects.all(), many=True)
+    bands = BandSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Song
+        fields = (
+            'id',
+            'title',
+            'duration',
+            'date',
+            'external_id',
+            'album_id',
+            'bands',
         )
