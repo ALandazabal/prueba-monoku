@@ -41,7 +41,7 @@ Luego de tener Postgres en su máquina siga los siguientes pasos:
 * Dentro del archivo **config.py**, coloque los datos de conexión correspondientes que allí se le solicitan.
 * Guarde los cambios.
 
-# Ejecución
+## Ejecución
 Para ejecutar django, ubiquese dentro de la carpeta llamada **pruebaMonoku** y luego debe de ejecutar los comandos de los siguientes pasos:
 
 * Verifique que todas las migraciones estén creadas en el proyecto:
@@ -57,8 +57,15 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-# Cargar Datos
+## Cargar Datos
 Ubíquese en la carpeta raíz del repositorio y ejecute el siguiente comando :
 ```bash
 loadData.py
 ```
+
+## Guía de estilos 
+Si deseas comprobar la guía de estilos utilizada en el código, ejecuta el siguiente comando:
+```bash
+flake8
+```
+Flake8 es una herramienta diseñada para la aplicación de la guía de estilos. Muestra por consola las advertencias de la falta estilos regido por PEP8 contra tú código. Sí deseas conocer más, te puedes guiar por su documentación <https://flake8.pycqa.org/en/latest/>

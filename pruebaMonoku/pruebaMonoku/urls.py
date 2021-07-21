@@ -21,7 +21,9 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path('', myapi_views.SongViewSet),
+
     path('', include('myapi.urls')),
 
-    url(r'^api/songs/(?P<title>[A-Za-z]+)/$', myapi_views.song_list),
+    #url(r'^api/songs/(?P<title>[A-Za-z]+)/$', myapi_views.song_list),
 ]
