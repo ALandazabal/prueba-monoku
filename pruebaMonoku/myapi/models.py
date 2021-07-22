@@ -15,7 +15,7 @@ class Artist(models.Model):
 
 class Album(models.Model):
     title = models.CharField(max_length=300, null=False)
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE)
 
 
 class Genre(models.Model):
@@ -56,7 +56,7 @@ class Song(models.Model):
 
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
 
-    subgenres = models.ManyToManyField(Subgenre)
+    subgenre = models.ForeignKey(Subgenre, on_delete=models.CASCADE)
 
     tags = models.ManyToManyField(Tag)
 
