@@ -76,7 +76,8 @@ class SongSerializer(serializers.HyperlinkedModelSerializer):
     #bands = serializers.PrimaryKeyRelatedField(queryset=Band.objects.all(), many=True)
     bands = BandSerializer(read_only=True, many=True)
     subgenre = serializers.SerializerMethodField()
-    genres = serializers.SerializerMethodField()
+    genre = serializers.SerializerMethodField()
+    #genre_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Song
@@ -89,17 +90,23 @@ class SongSerializer(serializers.HyperlinkedModelSerializer):
             'album_id',
             'bands',
             'subgenre',
-            'genres',
+            'genre',
+            #'genre_id',
         )
         depth = 1
 
-    def get_genres(self, obj):
+    def get_genre(self, obj):
         #print(self.fields['subgenres'])
         genre_id = Subgenre.objects.get(pk=obj.subgenre_id).genre_id
         
         genre_o = Genre.objects.get(pk=genre_id)
         #print(genre_o.description)
         return genre_o.description
+
+    """ def get_genre_id(self, obj):
+        genre_id = Subgenre.objects.get(pk=obj.subgenre_id).genre_id
+        genre_o = Genre.objects.get(pk=genre_id)
+        return genre_o.id """
 
     def get_subgenre(self, obj):
         name = Subgenre.objects.get(pk=obj.subgenre_id).description

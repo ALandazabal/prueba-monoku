@@ -2,14 +2,31 @@ from django.shortcuts import render
 
 from django.http import JsonResponse
 
+from django_filters import rest_framework as filters
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, status, viewsets, generics
+from rest_framework import status, viewsets, generics #,filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
 from .serializers import ArtistSerializer, SongSerializer
-from .models import Artist, Song
+from .models import Artist, Genre, Song
+
+
+class SongFilter(filters.FilterSet):
+    #genre_id = filters.ModelChoiceFilter(queryset=Genre.objects.all())
+    class Meta:
+        model = Song
+        #list_display = ['Titulo','Bandas','Subgenero', 'Genero']
+        #fields = ['title','bands','subgenre_id','genre_id']
+        fields = ['title','bands','subgenre_id']
+
+        """ def __init__(self, *args, **kwargs):
+            super(SongFilter, self).__init__(*args, **kwargs)
+            self.fields['description'] = 'Something' """
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related("thing")
 
 
 class SongViewSet(viewsets.ModelViewSet):
@@ -24,7 +41,9 @@ class SongViewSet(viewsets.ModelViewSet):
 
     # Show two filter fields
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title','bands','subgenre_id']
+    #filterset_fields = ['title','bands','subgenre_id']
+    filterset_class = SongFilter
+
 
 
 class ArtistViewSet(viewsets.ModelViewSet):

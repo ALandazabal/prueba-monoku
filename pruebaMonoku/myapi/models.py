@@ -21,10 +21,15 @@ class Album(models.Model):
 class Genre(models.Model):
     description = models.CharField(max_length=200, null=False)
 
+    def __str__(self):
+        return self.description
 
 class Subgenre(models.Model):
     description = models.CharField(max_length=200, null=False)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.description
 
 
 class Tag(models.Model):
