@@ -5,17 +5,23 @@ from rest_framework import serializers
 from .models import Album, Artist, Band, Genre, Song, Subgenre
 
 
-class AlbumSerializer(serializers.HyperlinkedModelSerializer):
+class AlbumSerializer(serializers.RelatedField):
+        
     class Meta:
         model = Album
         fields = (
             'title',
-            'artist'
+            'band'
         )
+
+    def to_representation(self, value):
+        return value.title
+
 
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
 
     songs = serializers.SerializerMethodField()
+    total_songs = serializers.SerializerMethodField()
     
     class Meta:
         model = Artist
@@ -23,29 +29,46 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'band_id',
             'songs',
+            'total_songs'
         )
 
     def get_songs(self, obj):
-        artist_id = obj.id
-        print(artist_id)
-        if Album.objects.filter(artist_id=artist_id).exists():
-            albums = Album.objects.get(artist_id=artist_id).title
+        band_id = obj.band_id
+        #print(band_id)
+        if Album.objects.filter(band_id=band_id).exists():
+            albums = Album.objects.get(band_id=band_id).id
+
+            list_songs = list(Song.objects.filter(album_id=albums).values('title'))
+            print(list_songs)
         else:
-            albums = None
-        print(albums)
-        return albums
+            list_songs = []
+        #print(albums)
+        return list_songs
+
+    def get_total_songs(self, obj):
+        band_id = obj.band_id
+        #print(band_id)
+        if Album.objects.filter(band_id=band_id).exists():
+            albums = Album.objects.get(band_id=band_id).id
+
+            list_songs = list(Song.objects.filter(album_id=albums).values('title'))
+            print(len(list_songs))
+        else:
+            list_songs = []
+        #print(albums)
+        return len(list_songs)
 
 
 class BandSerializer(serializers.RelatedField):
-    
-    def to_representation(self, value):
-        return value.name
     
     class Meta:
         model = Band
         fields = (
             'name',
         )
+
+    def to_representation(self, value):
+        return value.name
 
 
 class GenreSerializer(serializers.ModelSerializer):
