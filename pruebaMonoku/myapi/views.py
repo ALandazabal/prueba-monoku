@@ -24,7 +24,7 @@ class SongViewSet(viewsets.ModelViewSet):
 
     # Show two filter fields
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['bands']
+    filterset_fields = ['title','bands','subgenres','subgenres__genre_id']
 
 
 @api_view(['GET'])
