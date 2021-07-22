@@ -8,8 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
-from .serializers import SongSerializer, BandSerializer
-from .models import Song, Band
+from .serializers import ArtistSerializer, SongSerializer
+from .models import Artist, Song
 
 
 class SongViewSet(viewsets.ModelViewSet):
@@ -27,9 +27,9 @@ class SongViewSet(viewsets.ModelViewSet):
     filterset_fields = ['title','bands','subgenres','subgenres__genre_id']
 
 
-class BandViewSet(viewsets.ModelViewSet):
-    queryset = Band.objects.all()
-    serializer_class = BandSerializer
+class ArtistViewSet(viewsets.ModelViewSet):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
 
     lookup_field = 'id'
 

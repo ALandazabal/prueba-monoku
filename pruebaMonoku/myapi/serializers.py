@@ -2,7 +2,7 @@ import json
 
 from rest_framework import serializers
 
-from .models import Album, Band, Genre, Song, Subgenre
+from .models import Album, Artist, Band, Genre, Song, Subgenre
 
 
 class AlbumSerializer(serializers.HyperlinkedModelSerializer):
@@ -13,9 +13,30 @@ class AlbumSerializer(serializers.HyperlinkedModelSerializer):
             'artist'
         )
 
+class ArtistSerializer(serializers.HyperlinkedModelSerializer):
 
-""" class BandSerializer(serializers.RelatedField): """
-class BandSerializer(serializers.HyperlinkedModelSerializer):
+    songs = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Artist
+        fields = (
+            'name',
+            'band_id',
+            'songs',
+        )
+
+    def get_songs(self, obj):
+        artist_id = obj.id
+        print(artist_id)
+        if Album.objects.filter(artist_id=artist_id).exists():
+            albums = Album.objects.get(artist_id=artist_id).title
+        else:
+            albums = None
+        print(albums)
+        return albums
+
+
+class BandSerializer(serializers.RelatedField):
     
     def to_representation(self, value):
         return value.name
