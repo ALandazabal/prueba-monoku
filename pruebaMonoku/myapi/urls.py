@@ -4,6 +4,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'songs', views.SongViewSet)
+router.register(r'bands', views.BandViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

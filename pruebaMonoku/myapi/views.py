@@ -27,11 +27,18 @@ class SongViewSet(viewsets.ModelViewSet):
     filterset_fields = ['title','bands','subgenres','subgenres__genre_id']
 
 
-@api_view(['GET'])
+class BandViewSet(viewsets.ModelViewSet):
+    queryset = Band.objects.all()
+    serializer_class = BandSerializer
+
+    lookup_field = 'id'
+
+
+""" @api_view(['GET'])
 def song_list(request, title):
     """
-    List songs
-    """
+    #List songs
+"""
     song = Song.objects.filter(title=title).first()
 
     if not song:
@@ -39,4 +46,4 @@ def song_list(request, title):
 
     serializer = SongSerializer(song)
 
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_201_CREATED) """

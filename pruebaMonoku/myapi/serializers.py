@@ -14,7 +14,8 @@ class AlbumSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class BandSerializer(serializers.RelatedField):
+""" class BandSerializer(serializers.RelatedField): """
+class BandSerializer(serializers.HyperlinkedModelSerializer):
     
     def to_representation(self, value):
         return value.name
@@ -22,7 +23,7 @@ class BandSerializer(serializers.RelatedField):
     class Meta:
         model = Band
         fields = (
-            'name'
+            'name',
         )
 
 
